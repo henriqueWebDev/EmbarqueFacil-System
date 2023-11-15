@@ -17,7 +17,7 @@ import UsecaseCreateRoute from '../../../../application/usecase/route/createRout
 import { Input as CreateInput } from '../../../../application/usecase/route/createRoute.usecase';
 import { Input as UpdateInput } from '../../../../application/usecase/route/updateRoute.usecase';
 
-@Controller('Route')
+@Controller('route')
 export default class RouteController {
   constructor(readonly repo: RouteMemoryRepository) {}
 

@@ -60,8 +60,8 @@ it('should post and request new user', async () => {
   };
   const responseRoute = await axios.post(routeUrl, validInputRoute);
   const routeId = responseRoute.data._id;
-  const getRoute = await axios.get(routeUrl + '/' + routeId);
-  compareObject(getRoute, validInputRoute);
+  const getRouteData = (await axios.get(routeUrl + '/' + routeId)).data;
+  compareObject(getRouteData, validInputRoute);
 });
 
 it('should post the validInput and update the database with the newValidInput', async () => {
@@ -94,7 +94,7 @@ it('should post the validInput and update the database with the newValidInput', 
     description: 'Another valid Description',
     enterpriseId: enterprise._id,
   };
-  await axios.put(routeId, validInputRoute2);
-  const getRoute = await axios.get(routeUrl + '/' + routeId);
-  compareObject(getRoute, validInputRoute2);
+  await axios.put(routeUrl + '/' + routeId, validInputRoute2);
+  const getRouteData = (await axios.get(routeUrl + '/' + routeId)).data;
+  compareObject(getRouteData, validInputRoute2);
 });

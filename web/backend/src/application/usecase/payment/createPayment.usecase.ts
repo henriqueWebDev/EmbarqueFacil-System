@@ -7,17 +7,13 @@ export default class UsecaseCreatePayment {
     const entity = PaymentEntity.create(props);
     await this.repo.save(entity);
 
-    const installments = entity.installments.map((element) => {
-      return {
-        paidDate: element.paidDate,
-        expireDate: element.expireDate,
-      };
-    });
     return {
       _id: entity._id,
       enterpriseId: entity.enterpriseId,
       clientId: entity.clientId,
-      installments: installments,
+      expireDate: entity.expireDate,
+      paidDate: entity.paidDate,
+      value: entity.value,
     };
   }
 }
@@ -25,12 +21,16 @@ export default class UsecaseCreatePayment {
 export type Input = {
   enterpriseId: string;
   clientId: string;
-  installments: Array<{ paidDate: Date; expireDate: Date }>;
+  expireDate: Date;
+  paidDate?: Date;
+  value: number;
 };
 
 export type Output = {
   _id: string;
   enterpriseId: string;
   clientId: string;
-  installments: Array<{ paidDate: Date; expireDate: Date }>;
+  expireDate: Date;
+  paidDate?: Date;
+  value: number;
 };
