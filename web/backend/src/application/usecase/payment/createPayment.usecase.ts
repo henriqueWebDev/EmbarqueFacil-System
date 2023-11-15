@@ -21,8 +21,8 @@ export default class UsecaseCreatePayment {
 export type Input = {
   enterpriseId: string;
   clientId: string;
-  expireDate: Date;
-  paidDate?: Date;
+  expireDate: string;
+  paidDate?: string;
   value: number;
 };
 

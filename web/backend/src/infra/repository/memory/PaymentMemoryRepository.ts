@@ -21,7 +21,15 @@ export default class PaymentMemoryRepository
       (databasePayment) => databasePayment._id === PaymentEntity._id,
     );
     if (index === -1) throw new Error('Payment not found');
-    this.PaymentDatabase[index] = PaymentEntity;
+    const paymentObj = {
+      _id: PaymentEntity._id,
+      enterpriseId: PaymentEntity.enterpriseId,
+      clientId: PaymentEntity.clientId,
+      expireDate: PaymentEntity.expireDate,
+      paidDate: PaymentEntity.paidDate,
+      value: PaymentEntity.value,
+    };
+    this.PaymentDatabase[index] = paymentObj;
   }
   async delete(PaymentId: string): Promise<void> {
     const index = this.PaymentDatabase.findIndex(

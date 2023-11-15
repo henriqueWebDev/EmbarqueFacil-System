@@ -21,8 +21,8 @@ export type Input = {
   _id: string;
   enterpriseId: string;
   clientId: string;
-  expireDate: Date;
-  paidDate?: Date;
+  expireDate: string;
+  paidDate?: string;
   value: number;
 };
 
