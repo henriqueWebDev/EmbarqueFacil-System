@@ -30,7 +30,7 @@
           Data de nascimento
         </p>
         <p class="q-ma-none text-subtitle1">
-          {{ formatDate(client.dateBirth) }}
+          {{ formatDate(client.birthDate) }}
         </p>
       </div>
       <div class="col-12 flex justify-center">
@@ -84,14 +84,14 @@ export default {
         email: ref(null),
         cpf: ref(null),
         phone: ref(null),
-        dateBirth: new Date()
+        birthDate: new Date()
       },
       responsible: {
         name: ref(null),
         email: ref(null),
         cpf: ref(null),
         phone: ref(null),
-        dateBirth: new Date()
+        birthDate: new Date()
       }
     }
   },
@@ -107,7 +107,7 @@ export default {
     getUser() {
       const user = JSON.parse(localStorage.getItem('user'))
       this.client = user
-      this.client.dateBirth = user.dateBirth
+      this.client.birthDate = user.birthDate
       this.client.name = (user.username+' '+user.surname)
     },
     getResponsible() {
@@ -115,7 +115,7 @@ export default {
     },
     needResponsible() {
       const user = JSON.parse(localStorage.getItem('user'))
-      const date = new Date(user.dateBirth)
+      const date = new Date(user.birthDate)
       if ((date.getFullYear() - 18) >= date.getFullYear()) {
         this.needResponsible = true
       }

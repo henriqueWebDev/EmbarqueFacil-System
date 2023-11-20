@@ -3,7 +3,10 @@
     padding 
     class="row justify-center"
   >
-    <q-form class="col-11">
+    <q-form 
+      class="col-11" 
+      @submit="onSubmit"
+    >
       <div class="row">
         <div class="col-12 text-h6 flex justify-center items-center q-my-md q-mt-xl">
           Crie sua conta
@@ -11,7 +14,7 @@
         <q-input 
           filled  
           type="text" 
-          label="Nome do administrador" 
+          label="Nome" 
           v-model="user.name" 
           color="indigo-10" 
           class="q-my-md col-12" 
@@ -28,7 +31,7 @@
         <q-input 
           filled 
           type="text" 
-          label="Sobrenome do administrador"
+          label="Sobrenome"
           v-model="user.surname" 
           color="indigo-10" 
           class="q-my-md col-12" 
@@ -84,24 +87,6 @@
           class="q-my-md col-12" 
           inputmode="numeric" 
           :rules="[isTheInputValueNull(), validateCpf()]"
-        >
-          <template v-slot:prepend>
-            <q-icon 
-              class="text-black" 
-              name="-" 
-            />
-          </template>
-        </q-input>
-        <q-input 
-          filled 
-          type="text"
-          v-model="user.rg" 
-          label="RG" 
-          color="indigo-10" 
-          mask="##.###.###-#"
-          class="q-my-md col-12" 
-          inputmode="numeric" 
-          :rules="[isTheInputValueNull(), validateRg()]"
         >
           <template v-slot:prepend>
             <q-icon 
@@ -172,6 +157,7 @@
           :options="enterprises" 
           label="Empresas Disponíveis" 
           class="col-12"
+          :rules="[isTheInputValueNull()]"
         >
           <template v-slot:prepend>
             <q-icon 
@@ -269,7 +255,77 @@
       </div>
       
       <div v-show="needResponsible">
-        precisa de responsavel
+        <div class="col-12 text-h6 flex justify-center items-center q-my-md q-mt-xl">
+          Cadastre seu responsável
+        </div>
+        <q-input 
+          filled  
+          type="text" 
+          label="Nome do responsável" 
+          v-model="user.responsibleName" 
+          color="indigo-10" 
+          class="q-my-md col-12" 
+          @keypress="formattedNameAndSurname(user.name)"
+          :rules="[ needResponsible ? isTheInputValueNull() : () => true, needResponsible ? inputValueContainOnlyLettersAndWhitespace() : () => true]"
+        >
+          <template v-slot:prepend>
+            <q-icon 
+              class="text-black" 
+              name="person" 
+            />
+          </template>
+        </q-input>
+        <q-input 
+          filled  
+          type="text" 
+          label="Sobrenome do responsável" 
+          v-model="user.responsibleSurname" 
+          color="indigo-10" 
+          class="q-my-md col-12" 
+          @keypress="formattedNameAndSurname(user.name)"
+          :rules="[needResponsible ? isTheInputValueNull() : () => true, needResponsible ? inputValueContainOnlyLettersAndWhitespace() : () => true]"
+        >
+          <template v-slot:prepend>
+            <q-icon 
+              class="text-black" 
+              name="person" 
+            />
+          </template>
+        </q-input>
+        <q-input 
+          filled 
+          type="text" 
+          label="Email do responsável"
+          v-model="user.responsibleEmail" 
+          color="indigo-10" 
+          class="q-my-md col-12" 
+          :rules="[needResponsible ? isTheInputValueNull() : () => true, needResponsible ? validateEmailFormat() : () => true]"
+        >
+          <template v-slot:prepend>
+            <q-icon 
+              class="text-black" 
+              name="mail" 
+            />
+          </template>
+        </q-input>
+        <q-input 
+          filled 
+          type="text"
+          v-model="user.responsibleCpf" 
+          label="CPF do responsável" 
+          color="indigo-10" 
+          mask="###.###.###-##" 
+          class="q-my-md col-12" 
+          inputmode="numeric" 
+          :rules="[needResponsible ? isTheInputValueNull() : () => true, needResponsible ? validateCpf() : () => true]"
+        >
+          <template v-slot:prepend>
+            <q-icon 
+              class="text-black" 
+              name="-" 
+            />
+          </template>
+        </q-input>
       </div>
 
       <div class="text-right q-my-sm col-12">
@@ -287,7 +343,6 @@
 <script>
 import { ref } from 'vue'
 import validateCpfScript from '../script/validateCpfScript';
-import validateRgScript from '../script/validateRgScript';
 import ViaCep from 'src/entities/ViaCEP';
 
 const viaCep = new ViaCep()
@@ -303,7 +358,6 @@ export default {
       visiblePassword: ref(true),
       user: {
         cpf: ref(null),
-        rg: ref(null),
         name: ref(null),
         surname: ref(null),
         phone: ref(null),
@@ -327,6 +381,9 @@ export default {
     }
   },
   methods: {
+    onSubmit() {
+      console.log(this.user)
+    },
     validateCep() {
       return val => {
         if (val.length == 9) {
@@ -335,7 +392,6 @@ export default {
           this.user.adressCityId = null
           this.user.adressDistrict = null
           this.user.adressStreet = null
-          this.user.adressNumber = null
           return 'CEP incompleto.'
         }
       }
@@ -356,14 +412,11 @@ export default {
           this.user.adressCityId = adressObject.localidade
           this.user.adressDistrict = adressObject.bairro
           this.user.adressStreet = adressObject.logradouro
-          this.user.adressNumber = adressObject.gia
           return true
         }
         if (!adressIsValid) {
           this.user.adressCityId = null
           this.user.adressDistrict = null
-          this.user.adressStreet = null
-          this.user.adressNumber = null
           return 'Parece que o CEP fornecido não é válido ou não pode ser utilizado.'
         }
       }
@@ -391,6 +444,10 @@ export default {
       return val => {
         const today = new Date();
         const birthDate = new Date(val);
+        const age = today.getFullYear() - birthDate.getFullYear();
+        if (age < 18) {
+          this.needResponsible = true
+        }
         if (birthDate > today) {
           return 'Por favor, insira uma data de nascimento válida.';
         }
@@ -399,9 +456,6 @@ export default {
     },
     validateCpf() {
       return val => (val.length == 14) && validateCpfScript(val) || 'O CPF deve conter exatamente 14 dígitos.'
-    },
-    validateRg() {
-      return val => (val.length == 12) && validateRgScript(val) || 'O RG deve conter exatamente 12 dígitos.'
     },
     minLengthPassowrd() {
       return val => {

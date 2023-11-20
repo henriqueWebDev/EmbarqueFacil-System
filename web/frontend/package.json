@@ -14,11 +14,13 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
+    "apexcharts": "^3.44.0",
     "axios": "^1.2.1",
     "quasar": "^2.6.0",
     "vitest": "^0.34.6",
     "vue": "^3.0.0",
-    "vue-router": "^4.0.0"
+    "vue-router": "^4.0.0",
+    "vue3-apexcharts": "^1.4.4"
   },
   "devDependencies": {
     "@quasar/app-vite": "^1.0.0",

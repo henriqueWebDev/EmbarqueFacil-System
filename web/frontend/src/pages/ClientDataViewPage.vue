@@ -1,6 +1,15 @@
 <template>
   <q-page padding>
-    <div class="row">
+    <q-spinner
+      color="indigo-10"
+      size="10em"
+      class="text-center full-width"
+      v-if="client.cpf == null"
+    />
+    <div 
+      class="row" 
+      v-if="!(client.cpf == null)"
+    >
       <div class="col-12 q-mb-sm"> 
         <p class="q-ma-none text-h6">
           {{ client.name }}
@@ -49,17 +58,17 @@ export default {
     return {
       needResponsibleStatus: ref(false),
       client: {
-        name: 'Nome Sobrenome',
-        email: 'Email@gmail.com',
-        cpf: 'XXX.XXX.XXX-XX',
-        phone: '+55 XX XXXXX-XXXX',
+        name: ref(null),
+        email: ref(null),
+        cpf: ref(null),
+        phone: ref(null),
         dateBirth: new Date()
       },
       responsible: {
-        name: 'Nome Sobrenome',
-        email: 'Email@gmail.com',
-        cpf: 'XXX.XXX.XXX-XX',
-        phone: '+55 XX XXXXX-XXXX',
+        name: ref(null),
+        email: ref(null),
+        cpf: ref(null),
+        phone: ref(null),
         dateBirth: new Date()
       }
     }

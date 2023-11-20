@@ -28,6 +28,7 @@ const routes = [
       { path: 'admin/default-report', component: () => import('pages/DefaultReportPage.vue') },
       { path: 'admin/usage-report', component: () => import('pages/UsageReportPage.vue') },
       { path: 'admin/registered-drivers', component: () => import('pages/RegisteredDriversPage.vue') },
+      { path: 'admin/registered-drivers/register', component: () => import('pages/RegisterDriverPage.vue') },
       { path: 'client', component: () => import('pages/ClientPage.vue') },
       { path: 'client/edit', component: () => import('pages/ClientEditPage.vue') },
       { path: 'client/cards', component: () => import('pages/CardsPage.vue') },

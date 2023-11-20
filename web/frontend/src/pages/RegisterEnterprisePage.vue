@@ -48,7 +48,7 @@
         v-model="enterprise.adressCityId" 
         :options="city" 
         label="Cidade" 
-        class="col-12"
+        class="q-my-md col-12"
       >
         <template v-slot:prepend>
           <q-icon class="text-black" name="house" />
@@ -144,24 +144,6 @@
       </q-input>
       <q-input 
         filled 
-        type="text"
-        v-model="user.rg" 
-        label="RG" 
-        color="indigo-10" 
-        mask="##.###.###-#"
-        class="q-my-md col-12" 
-        inputmode="numeric" 
-        :rules="[isTheInputValueNull(), validateRg()]"
-      >
-        <template v-slot:prepend>
-          <q-icon 
-            class="text-black" 
-            name="-" 
-          />
-        </template>
-      </q-input>
-      <q-input 
-        filled 
         type="tel" 
         v-model="user.phone" 
         label="Telefone" 
@@ -228,25 +210,27 @@
 import { ref } from 'vue'
 import validateCpfScript from '../script/validateCpfScript'
 import validateCnpjScript from '../script/validateCnpjScript'
-import validateRgScript from '../script/validateRgScript'
+import RegisterEnterprise from 'src/entities/RegisterEnterprise'
+import { Notify } from 'quasar'
+
+const registerEnterprise = new RegisterEnterprise()
 
 export default {
   name: 'RegisterEnterprise',
   data() {
     return {
       visiblePassword: ref(true),
-      city: ['RO - Cacoal'],
+      city: ['Cacoal'],
       confirmPassword: '',
       user: {
         cpf: ref(null),
-        rg: ref(null),
         name: ref(null),
         surname: ref(null),
         phone: ref(null),
         email: ref(null),
         password: ref(null),
         birthDate: new Date(),
-        type: 'admin'
+        type: 'admin',
       },
       enterprise: {
         enterpriseName: ref(null),
@@ -256,9 +240,8 @@ export default {
     }
   },
   methods: {
-    onSubmit() {
-      console.log(this.user)
-      console.log(this.enterprise)
+    async onSubmit() {
+      const registerStatus = registerEnterprise.resgister(this.enterprise, this.user)
     },
     isTheInputValueNull() {
       return val => val && val.length !== 0 || 'Este campo não pode estar nulo.';
@@ -295,9 +278,6 @@ export default {
     },
     validateCpf() {
       return val => (val.length == 14) && validateCpfScript(val) || 'O CPF deve conter exatamente 14 dígitos.'
-    },
-    validateRg() {
-      return val => (val.length == 12) && validateRgScript(val) || 'O RG deve conter exatamente 12 dígitos.'
     },
     minLengthPassowrd() {
       return val => {

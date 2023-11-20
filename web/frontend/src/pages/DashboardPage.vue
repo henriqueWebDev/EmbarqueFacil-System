@@ -5,7 +5,13 @@
         <div>
           Número total de clientes:
         </div>
-        <div>
+        <q-spinner
+          color="indigo-10"
+          size="3em"
+          class="text-center full-width"
+          v-if="numberOfClients == null"
+        />
+        <div v-if="!(numberOfClients == null)">
           {{ numberOfClients }}
         </div>
       </div>
@@ -13,7 +19,13 @@
         <div>
           Renda bruta mensal esperada:
         </div>
-        <div>
+        <q-spinner
+          color="indigo-10"
+          size="3em"
+          class="text-center full-width"
+          v-if="expectedMonthlyIncome == null"
+        />
+        <div v-if="!(expectedMonthlyIncome == null)">
           R$: {{ expectedMonthlyIncome }}
         </div>
       </div>
