@@ -16,6 +16,7 @@ export default class UsecaseCreateEnterprise {
     });
     this.enterpriseRepo.save(enterpriseEntity);
     this.userRepo.save(userEntity);
+
     return {
       enterprise: {
         _id: enterpriseEntity._id,

@@ -1,6 +1,5 @@
 import UserRepositoryInterface from 'src/application/repository/userRepositoryInterface';
 import * as JWT from 'jsonwebtoken';
-import User from '../../../domain/User';
 import { config } from 'dotenv';
 config();
 
@@ -15,28 +14,30 @@ export default class UsecaseLoginUser {
       secretJWTKey,
       { expiresIn: 60 * 60 * 24 },
     );
-    await this.repo.save(user);
     return {
-      _id: user._id,
-      cpf: user.cpf,
-      rg: user.rg,
-      name: user.name,
-      surname: user.surname,
-      phone: user.phone,
-      email: user.email,
-      password: user.password,
-      birthDate: user.birthDate,
-      type: user.type,
-      idEnterprise: user.idEnterprise,
-      adressStreet: user.adressStreet,
-      adressNumber: user.adressNumber,
-      adressCityId: user.adressCityId,
-      adressDistrict: user.adressDistrict,
-      adressCep: user.adressCep,
-      responsibleName: user.responsibleName,
-      responsibleSurname: user.responsibleSurname,
-      responsibleCpf: user.responsibleCpf,
-      responsibleEmail: user.responsibleEmail,
+      token: token,
+      user: {
+        _id: user._id,
+        cpf: user.cpf,
+        rg: user.rg,
+        name: user.name,
+        surname: user.surname,
+        phone: user.phone,
+        email: user.email,
+        password: user.password,
+        birthDate: user.birthDate,
+        type: user.type,
+        idEnterprise: user.idEnterprise,
+        adressStreet: user.adressStreet,
+        adressNumber: user.adressNumber,
+        adressCityId: user.adressCityId,
+        adressDistrict: user.adressDistrict,
+        adressCep: user.adressCep,
+        responsibleName: user.responsibleName,
+        responsibleSurname: user.responsibleSurname,
+        responsibleCpf: user.responsibleCpf,
+        responsibleEmail: user.responsibleEmail,
+      },
     };
   }
 }

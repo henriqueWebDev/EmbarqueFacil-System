@@ -27,6 +27,15 @@ export default class UserMemoryRepository implements UserRepositoryInterface {
       responsibleEmail: 'izabeldesouzaclaudete@gmail.com',
     },
   ];
+  async login(loginData: any): Promise<User> {
+    const [userDto] = await this.usersDatabase.filter((user) => {
+      user.email == loginData.email;
+    });
+    if (!userDto) throw new Error('User not found');
+    if (userDto.password != User.encrypt(loginData.password))
+      throw new Error('Invalid Credentials');
+    return new User(userDto);
+  }
   async save(user: User): Promise<void> {
     this.usersDatabase.push({
       _id: user._id,

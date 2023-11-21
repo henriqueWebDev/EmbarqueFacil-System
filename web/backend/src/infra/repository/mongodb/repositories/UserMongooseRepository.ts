@@ -4,6 +4,34 @@ import { Injectable } from '@nestjs/common';
 import UserModel from '../models/mongooseModelUser';
 @Injectable()
 export default class UserMongooseRepository implements UserRepositoryInterface {
+  async login(loginData: any): Promise<User> {
+    const userDto = await this.model.findOne({ email: loginData.email });
+    if (!userDto) throw new Error('User not found');
+    if (userDto.password != User.encrypt(loginData.password))
+      throw new Error('Invalid Credentials');
+    return new User({
+      _id: userDto._id,
+      cpf: userDto.cpf,
+      rg: userDto.rg,
+      name: userDto.name,
+      surname: userDto.surname,
+      phone: userDto.phone,
+      email: userDto.email,
+      password: userDto.password,
+      birthDate: userDto.birthDate,
+      type: userDto.type,
+      idEnterprise: userDto.idEnterprise,
+      adressStreet: userDto.adressStreet,
+      adressNumber: userDto.adressNumber,
+      adressCityId: userDto.adressCityId,
+      adressDistrict: userDto.adressDistrict,
+      adressCep: userDto.adressCep,
+      responsibleName: userDto.responsibleName,
+      responsibleSurname: userDto.responsibleSurname,
+      responsibleCpf: userDto.responsibleCpf,
+      responsibleEmail: userDto.responsibleEmail,
+    });
+  }
   model = UserModel;
   async save(user: User): Promise<void> {
     this.model.create({

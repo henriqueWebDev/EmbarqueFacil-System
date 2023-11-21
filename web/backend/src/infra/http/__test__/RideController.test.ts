@@ -40,10 +40,10 @@ async function registerEnterprise() {
     enterpriseUrl,
     validInputEnterprise,
   );
-  return responseEnterprise.data.enterprise_id;
+  return responseEnterprise.data.enterprise._id;
 }
 
-async function registerUser() {
+async function registerUser(idEnterprise: string) {
   const UserUrl = 'http://localhost:3000/user';
   const validInputUser = {
     cpf: '31547389249',
@@ -55,7 +55,7 @@ async function registerUser() {
     password: 'sim',
     birthDate: '08-23-2005',
     type: 'admin',
-    idEnterprise: '',
+    idEnterprise: idEnterprise,
     adressStreet: 'rua vanderlei dallacosta',
     adressNumber: '0310',
     adressCityId: '',
@@ -78,7 +78,7 @@ async function registerBus() {
   const busData = (await axios.post(busUrl, validInput)).data;
   return busData._id;
 }
-async function registerDriver() {
+async function registerDriver(enterpriseId: string) {
   const driverUrl = 'http://localhost:3000/user';
   const validInput = {
     cpf: '70116562277',
@@ -90,7 +90,7 @@ async function registerDriver() {
     password: 'sim',
     birthDate: '08-23-2005',
     type: 'driver',
-    idEnterprise: '',
+    idEnterprise: enterpriseId,
     adressStreet: 'rua vanderlei dallacosta',
     adressNumber: '0310',
     adressCityId: '',
@@ -124,14 +124,14 @@ function compareObject(Ride: any, object: any) {
 }
 
 it('should post a new user', async () => {
+  const enterpriseId = await registerEnterprise();
   const userIdList = [
-    await registerUser(),
-    await registerUser(),
-    await registerUser(),
+    await registerUser(enterpriseId),
+    await registerUser(enterpriseId),
+    await registerUser(enterpriseId),
   ];
   const busId = await registerBus();
-  const driverId = await registerDriver();
-  const enterpriseId = await registerEnterprise();
+  const driverId = await registerDriver(enterpriseId);
   const routeId = await registerRoute(enterpriseId);
   const validInputRide = {
     clientIdList: userIdList,
@@ -146,14 +146,14 @@ it('should post a new user', async () => {
 });
 
 it('should post and request new user', async () => {
+  const enterpriseId = await registerEnterprise();
   const userIdList = [
-    await registerUser(),
-    await registerUser(),
-    await registerUser(),
+    await registerUser(enterpriseId),
+    await registerUser(enterpriseId),
+    await registerUser(enterpriseId),
   ];
   const busId = await registerBus();
-  const driverId = await registerDriver();
-  const enterpriseId = await registerEnterprise();
+  const driverId = await registerDriver(enterpriseId);
   const routeId = await registerRoute(enterpriseId);
   const validInputRide = {
     clientIdList: userIdList,
@@ -169,14 +169,14 @@ it('should post and request new user', async () => {
 });
 
 it('should post the validInput and update the database with the newValidInput', async () => {
+  const enterpriseId = await registerEnterprise();
   const userIdList = [
-    await registerUser(),
-    await registerUser(),
-    await registerUser(),
+    await registerUser(enterpriseId),
+    await registerUser(enterpriseId),
+    await registerUser(enterpriseId),
   ];
   const busId = await registerBus();
-  const driverId = await registerDriver();
-  const enterpriseId = await registerEnterprise();
+  const driverId = await registerDriver(enterpriseId);
   const routeId = await registerRoute(enterpriseId);
   const validInputRide = {
     clientIdList: userIdList,

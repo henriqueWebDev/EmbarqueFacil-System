@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+
 const routeUrl = 'http://localhost:3000/route';
 const enterpriseUrl = 'http://localhost:3000/enterprise';
 
@@ -104,6 +106,7 @@ it('should post and request new user', async () => {
   };
   const responseRoute = await axios.post(routeUrl, validInputRoute);
   const routeId = responseRoute.data._id;
+  await delay(3000);
   const getRouteData = (await axios.get(routeUrl + '/' + routeId)).data;
   compareObject(getRouteData, validInputRoute);
 });
@@ -160,6 +163,7 @@ it('should post the validInput and update the database with the newValidInput', 
     description: 'Another valid Description',
     enterpriseId: enterprise._id,
   };
+  await delay(3000);
   await axios.put(routeUrl + '/' + routeId, validInputRoute2);
   const getRouteData = (await axios.get(routeUrl + '/' + routeId)).data;
   compareObject(getRouteData, validInputRoute2);

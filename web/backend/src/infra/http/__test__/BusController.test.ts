@@ -1,7 +1,8 @@
 import axios from 'axios';
 const baseurl = 'http://localhost:3000/bus';
+const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
-it('should post a new user', async () => {
+it('should post a new bus', async () => {
   const validInput = {
     description: 'valid description',
     capacity: 39,
@@ -12,16 +13,17 @@ it('should post a new user', async () => {
   expect(responseData.capacity).toBe(validInput.capacity);
 });
 
-it('should post and request new user', async () => {
+it('should post and request new bus', async () => {
   const validInput = {
     description: 'valid description',
     capacity: 39,
   };
-  const userId = (await axios.post(baseurl, validInput)).data._id;
-  const user = (await axios.get(baseurl + '/' + userId)).data;
-  expect(user).toBeDefined();
-  expect(user.description).toBe(validInput.description);
-  expect(user.capacity).toBe(validInput.capacity);
+  const busId = (await axios.post(baseurl, validInput)).data._id;
+  await delay(3000);
+  const bus = (await axios.get(baseurl + '/' + busId)).data;
+  expect(bus).toBeDefined();
+  expect(bus.description).toBe(validInput.description);
+  expect(bus.capacity).toBe(validInput.capacity);
 });
 
 it('should post the validInput and update the database with the newValidInput', async () => {
@@ -29,14 +31,16 @@ it('should post the validInput and update the database with the newValidInput', 
     description: 'valid description',
     capacity: 39,
   };
-  const userId = (await axios.post(baseurl, validInput)).data._id;
+  const busId = (await axios.post(baseurl, validInput)).data._id;
   const validInput2 = {
-    _id: userId,
+    _id: busId,
     description: 'another valid description',
     capacity: 39,
   };
-  await axios.put(baseurl + '/' + userId, validInput2);
-  const user = (await axios.get(baseurl + '/' + userId)).data;
-  expect(user.description).toBe(validInput2.description);
-  expect(user.capacity).toBe(validInput2.capacity);
+  await delay(2000);
+  await axios.put(baseurl + '/' + busId, validInput2);
+  await delay(2000);
+  const bus = (await axios.get(baseurl + '/' + busId)).data;
+  expect(bus.description).toBe(validInput2.description);
+  expect(bus.capacity).toBe(validInput2.capacity);
 });
