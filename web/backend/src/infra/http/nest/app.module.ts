@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import UserController from 'src/infra/http/nest/controllers/User.controller';
+import UserController from './controllers/User.controller';
 import BusController from './controllers/Bus.controller';
 import EnterpriseController from './controllers/Enterprise.controller';
 import RouteController from './controllers/Route.controller';
