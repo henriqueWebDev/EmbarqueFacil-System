@@ -18,8 +18,8 @@ import RouteMemoryRepository from './../../repository/memory/RouteMemoryReposito
 import PaymentMemoryRepository from './../../repository/memory/PaymentMemoryRepository';
 import RideMemoryRepository from './../../repository/memory/RideMemoryRepository';
 
+import { databaseProviders as connectDatabase } from './mongodbProvider';
 @Module({
-  imports: [],
   controllers: [
     UserController,
     BusController,
@@ -29,6 +29,7 @@ import RideMemoryRepository from './../../repository/memory/RideMemoryRepository
     RideController,
   ],
   providers: [
+    connectDatabase,
     UserMongooseRepository,
     BusMongooseRepository,
     EnterpriseMongooseRepository,
@@ -37,5 +38,6 @@ import RideMemoryRepository from './../../repository/memory/RideMemoryRepository
     PaymentMemoryRepository,
     RideMemoryRepository,
   ],
+  exports: [connectDatabase],
 })
 export class AppModule {}
