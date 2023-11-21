@@ -4,21 +4,43 @@ const baseUrl = 'http://localhost:3000/ride';
 async function registerEnterprise() {
   const enterpriseUrl = 'http://localhost:3000/enterprise';
   const validInputEnterprise = {
-    cnpj: '01916446000123',
-    name: 'Empresa valida',
-    phone: '69984696665',
-    email: 'Empresa@gmail.com',
-    adressStreet: 'rua vanderlei dallacosta',
-    adressNumber: '0310',
-    adressCityId: '',
-    adressDistrict: 'centro',
-    adressCep: '',
+    enterprise: {
+      cnpj: '01916446000123',
+      name: 'Empresa valida',
+      phone: '69984696665',
+      email: 'Empresa@gmail.com',
+      adressStreet: 'rua vanderlei dallacosta',
+      adressNumber: '0310',
+      adressCityId: '',
+      adressDistrict: 'centro',
+      adressCep: '',
+    },
+    user: {
+      cpf: '70116562277',
+      rg: '1551035',
+      name: 'Guilherme',
+      surname: 'Fornaciari',
+      phone: '69984696665',
+      email: 'fornaciari049@gmail.com',
+      password: 'sim',
+      birthDate: '08-23-2005',
+      type: 'admin',
+      adressStreet: '',
+      adressNumber: '',
+      adressCityId: '',
+      adressDistrict: '',
+      adressCep: '',
+      responsibleName: '',
+      responsibleSurname: '',
+      responsibleCpf: '',
+      responsibleEmail: '',
+    },
   };
   const responseEnterprise = await axios.post(
     enterpriseUrl,
     validInputEnterprise,
   );
-  return responseEnterprise.data._id;
+  return responseEnterprise.data.enterprise_id;
 }
 
 async function registerUser() {

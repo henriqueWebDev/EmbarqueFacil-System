@@ -1,4 +1,4 @@
-import RouteRepositoryInterface from '../../repository/RouteRepositoryInterface';
+import RouteRepositoryInterface from '../../repository/routeRepositoryInterface';
 
 export default class UsecaseDeleteRoute {
   constructor(readonly repo: RouteRepositoryInterface) {}

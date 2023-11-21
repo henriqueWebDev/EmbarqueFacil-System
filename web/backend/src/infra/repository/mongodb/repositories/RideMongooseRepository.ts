@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import RideRepositoryInterface from '../../../application/repository/RideRepositoryInterface';
-import RideEntity from '../../../domain/RideEntity';
+import RideRepositoryInterface from 'src/application/repository/RideRepositoryInterface';
+import RideEntity from '../../../../domain/RideEntity';
 @Injectable()
 export default class RideMemoryRepository implements RideRepositoryInterface {
   private RideDatabase: Array<any> = [];

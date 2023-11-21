@@ -1,4 +1,4 @@
-import RouteRepositoryInterface from '../../repository/RouteRepositoryInterface';
+import RouteRepositoryInterface from '../../repository/routeRepositoryInterface';
 import RouteEntity from '../../../domain/RouteEntity';
 
 export default class UsecaseUpdateRoute {

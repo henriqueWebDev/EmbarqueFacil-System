@@ -1,4 +1,4 @@
-import PaymentRepositoryInterface from '../../repository/PaymentRepositoryInterface';
+import PaymentRepositoryInterface from '../../repository/paymentRepositoryInterface';
 
 export default class UsecaseGetOnePayment {
   constructor(readonly repo: PaymentRepositoryInterface) {}

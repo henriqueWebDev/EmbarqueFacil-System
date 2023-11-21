@@ -1,4 +1,4 @@
-import RouteRepositoryInterface from '../../repository/RouteRepositoryInterface';
+import RouteRepositoryInterface from '../../repository/routeRepositoryInterface';
 
 export default class UsecaseGetOneRoute {
   constructor(readonly repo: RouteRepositoryInterface) {}

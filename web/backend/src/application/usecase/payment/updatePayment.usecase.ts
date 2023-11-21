@@ -1,4 +1,4 @@
-import PaymentRepositoryInterface from '../../repository/PaymentRepositoryInterface';
+import PaymentRepositoryInterface from '../../repository/paymentRepositoryInterface';
 import PaymentEntity from '../../../domain/PaymentEntity';
 
 export default class UsecaseUpdatePayment {
