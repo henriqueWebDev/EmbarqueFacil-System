@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import PaymentRepositoryInterface from 'src/application/repository/PaymentRepositoryInterface';
+import PaymentRepositoryInterface from '../../../application/repository/PaymentRepositoryInterface';
 import PaymentEntity from '../../../domain/PaymentEntity';
 @Injectable()
 export default class PaymentMemoryRepository
