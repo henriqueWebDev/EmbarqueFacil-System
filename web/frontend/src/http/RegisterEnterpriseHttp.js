@@ -6,11 +6,7 @@ export default class RegisterEnterpriseHttp {
 
    async post(data) {
       try {
-         const response = await axios.get(backendDefaultRoute + 'enterprise', {
-            headers: {
-                'Content-Type': 'application/json',
-                }
-            })
+         const response = await axios.get(backendDefaultRoute + 'enterprise')
          return response
       } catch (error) {
          throw error;
