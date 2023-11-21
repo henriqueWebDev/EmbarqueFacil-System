@@ -211,7 +211,7 @@ import { ref } from 'vue'
 import validateCpfScript from '../script/validateCpfScript'
 import validateCnpjScript from '../script/validateCnpjScript'
 import RegisterEnterprise from 'src/entities/RegisterEnterprise'
-import { Notify } from 'quasar'
+import axios from 'axios'
 
 const registerEnterprise = new RegisterEnterprise()
 
@@ -223,25 +223,47 @@ export default {
       city: ['Cacoal'],
       confirmPassword: '',
       user: {
-        cpf: ref(null),
-        name: ref(null),
-        surname: ref(null),
-        phone: ref(null),
-        email: ref(null),
-        password: ref(null),
+        cpf: '',
+        rg: '',
+        name: '',
+        surname: '',
+        phone: '',
+        email: '',  
+        password: '',
         birthDate: new Date(),
         type: 'admin',
+        adressStreet: '',
+        adressNumber: '',
+        adressCityId: '',
+        adressDistrict: '',
+        adressCep: '',
+        responsibleName: '',
+        responsibleSurname: '',
+        responsibleCpf: '',
+        responsibleEmail: ''
       },
       enterprise: {
-        enterpriseName: ref(null),
-        adressCityId: ref(null),
-        cnpj: ref(null),
+        cnpj: '',
+        name: '',
+        phone: '',
+        email: '',
+        adressStreet: '',
+        adressNumber: '',
+        adressCityId: '',
+        adressDistrict: '',
+        adressCep: ''
       }
     }
   },
   methods: {
     async onSubmit() {
-      const registerStatus = registerEnterprise.resgister(this.enterprise, this.user)
+      const response = ''
+      try {
+        response = await axios.get('http://embarque-facil-system.vercel.app/' + 'enterprise')
+      } catch (error) {
+        console.log(error)
+      }
+      console.log(response)
     },
     isTheInputValueNull() {
       return val => val && val.length !== 0 || 'Este campo não pode estar nulo.';

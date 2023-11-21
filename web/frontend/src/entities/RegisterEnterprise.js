@@ -7,7 +7,6 @@
 
       async register(dataEnterprise, dataAdmin) {
          const response = await this.registerEnterprise.create(dataEnterprise, dataAdmin)
-         console.log('Entitie Response: '+ response)
          return response
       }
    }
