@@ -3,6 +3,8 @@ import { config } from 'dotenv';
 config();
 export const databaseProviders = {
   provide: 'DATABASE_CONNECTION',
-  useFactory: (): Promise<typeof mongoose> =>
-    mongoose.connect(process.env.CONNECTIONSTRING),
+  useFactory: (): Promise<typeof mongoose> => {
+    console.log(process.env.CONNECTIONSTRING);
+    return mongoose.connect(process.env.CONNECTIONSTRING);
+  },
 };
