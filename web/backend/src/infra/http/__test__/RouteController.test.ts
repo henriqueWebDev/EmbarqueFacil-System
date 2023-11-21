@@ -11,21 +11,43 @@ function compareObject(route: any, object: any) {
 
 it('should post a new user', async () => {
   const validInputEnterprise = {
-    cnpj: '01916446000123',
-    name: 'Empresa valida',
-    phone: '69984696665',
-    email: 'Empresa@gmail.com',
-    adressStreet: 'rua vanderlei dallacosta',
-    adressNumber: '0310',
-    adressCityId: '',
-    adressDistrict: 'centro',
-    adressCep: '',
+    enterprise: {
+      cnpj: '01916446000123',
+      name: 'Empresa valida',
+      phone: '69984696665',
+      email: 'Empresa@gmail.com',
+      adressStreet: 'rua vanderlei dallacosta',
+      adressNumber: '0310',
+      adressCityId: '',
+      adressDistrict: 'centro',
+      adressCep: '',
+    },
+    user: {
+      cpf: '70116562277',
+      rg: '1551035',
+      name: 'Guilherme',
+      surname: 'Fornaciari',
+      phone: '69984696665',
+      email: 'fornaciari049@gmail.com',
+      password: 'sim',
+      birthDate: '08-23-2005',
+      type: 'admin',
+      adressStreet: '',
+      adressNumber: '',
+      adressCityId: '',
+      adressDistrict: '',
+      adressCep: '',
+      responsibleName: '',
+      responsibleSurname: '',
+      responsibleCpf: '',
+      responsibleEmail: '',
+    },
   };
   const responseEnterprise = await axios.post(
     enterpriseUrl,
     validInputEnterprise,
   );
-  const enterprise = responseEnterprise.data;
+  const enterprise = responseEnterprise.data.enterprise;
   const validInputRoute = {
     startTime: '07:00:00',
     description: 'A valid Description',
@@ -38,21 +60,43 @@ it('should post a new user', async () => {
 
 it('should post and request new user', async () => {
   const validInputEnterprise = {
-    cnpj: '01916446000123',
-    name: 'Empresa valida',
-    phone: '69984696665',
-    email: 'Empresa@gmail.com',
-    adressStreet: 'rua vanderlei dallacosta',
-    adressNumber: '0310',
-    adressCityId: '',
-    adressDistrict: 'centro',
-    adressCep: '',
+    enterprise: {
+      cnpj: '01916446000123',
+      name: 'Empresa valida',
+      phone: '69984696665',
+      email: 'Empresa@gmail.com',
+      adressStreet: 'rua vanderlei dallacosta',
+      adressNumber: '0310',
+      adressCityId: '',
+      adressDistrict: 'centro',
+      adressCep: '',
+    },
+    user: {
+      cpf: '70116562277',
+      rg: '1551035',
+      name: 'Guilherme',
+      surname: 'Fornaciari',
+      phone: '69984696665',
+      email: 'fornaciari049@gmail.com',
+      password: 'sim',
+      birthDate: '08-23-2005',
+      type: 'admin',
+      adressStreet: '',
+      adressNumber: '',
+      adressCityId: '',
+      adressDistrict: '',
+      adressCep: '',
+      responsibleName: '',
+      responsibleSurname: '',
+      responsibleCpf: '',
+      responsibleEmail: '',
+    },
   };
   const responseEnterprise = await axios.post(
     enterpriseUrl,
     validInputEnterprise,
   );
-  const enterprise = responseEnterprise.data;
+  const enterprise = responseEnterprise.data.enterprise;
   const validInputRoute = {
     startTime: '07:00:00',
     description: 'A valid Description',
@@ -66,21 +110,43 @@ it('should post and request new user', async () => {
 
 it('should post the validInput and update the database with the newValidInput', async () => {
   const validInputEnterprise = {
-    cnpj: '01916446000123',
-    name: 'Empresa valida',
-    phone: '69984696665',
-    email: 'Empresa@gmail.com',
-    adressStreet: 'rua vanderlei dallacosta',
-    adressNumber: '0310',
-    adressCityId: '',
-    adressDistrict: 'centro',
-    adressCep: '',
+    enterprise: {
+      cnpj: '01916446000123',
+      name: 'Empresa valida',
+      phone: '69984696665',
+      email: 'Empresa@gmail.com',
+      adressStreet: 'rua vanderlei dallacosta',
+      adressNumber: '0310',
+      adressCityId: '',
+      adressDistrict: 'centro',
+      adressCep: '',
+    },
+    user: {
+      cpf: '70116562277',
+      rg: '1551035',
+      name: 'Guilherme',
+      surname: 'Fornaciari',
+      phone: '69984696665',
+      email: 'fornaciari049@gmail.com',
+      password: 'sim',
+      birthDate: '08-23-2005',
+      type: 'admin',
+      adressStreet: '',
+      adressNumber: '',
+      adressCityId: '',
+      adressDistrict: '',
+      adressCep: '',
+      responsibleName: '',
+      responsibleSurname: '',
+      responsibleCpf: '',
+      responsibleEmail: '',
+    },
   };
   const responseEnterprise = await axios.post(
     enterpriseUrl,
     validInputEnterprise,
   );
-  const enterprise = responseEnterprise.data;
+  const enterprise = responseEnterprise.data.enterprise;
   const validInputRoute1 = {
     startTime: '07:00:00',
     description: 'A valid Description',

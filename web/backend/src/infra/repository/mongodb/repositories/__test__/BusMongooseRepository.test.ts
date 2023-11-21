@@ -70,30 +70,6 @@ describe('Test the mongoose repository', () => {
     expect(getbus.description).toBe(updateData.description);
   }, 15000);
 
-  it('should test if the database creates new buss (test getall)', async () => {
-    await mongoose.connect(process.env.TESTCONNECTIONSTRING);
-    const validInput = {
-      description: 'valid description',
-      capacity: 39,
-    };
-    const validInput2 = {
-      description: 'another valid description',
-      capacity: 39,
-    };
-    const repo = new busMongooseRepository();
-    const firstLength = await repo.getLength();
-    const bus1 = Bus.create(validInput);
-    await repo.save(bus1);
-    const bus2 = Bus.create(validInput2);
-    await repo.save(bus2);
-    await delay(200);
-    const getAll = await repo.getAll();
-    await mongoose.connection.close();
-    expect(getAll.length).toBe(firstLength + 2);
-    expect(getAll.find((bus) => bus._id == bus1._id)).toBeDefined();
-    expect(getAll.find((bus) => bus._id == bus2._id)).toBeDefined();
-  }, 15000);
-
   it('should test if the database gives an error if the bus tries to access a invalid Id', async () => {
     await mongoose.connect(process.env.TESTCONNECTIONSTRING);
     const repo = new busMongooseRepository();

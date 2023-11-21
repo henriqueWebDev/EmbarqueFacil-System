@@ -1,34 +1,12 @@
 import UserRepositoryInterface from 'src/application/repository/userRepositoryInterface';
 import User from '../../../../domain/User';
 import { Injectable } from '@nestjs/common';
+import UserModel from '../models/mongooseModelUser';
 @Injectable()
 export default class UserMemoryRepository implements UserRepositoryInterface {
-  private usersDatabase: Array<any> = [
-    {
-      _id: 'e0cfa336-747a-486c-bf18-8335fa8aae8b',
-      cpf: '70116562277',
-      rg: '1551035',
-      name: 'Guilherme',
-      surname: 'Fornaciari',
-      phone: '69984696665',
-      email: 'fornaciari049@gmail.com',
-      password: 'sim',
-      birthDate: '08-23-2005',
-      type: 'client',
-      idEnterprise: '',
-      adressStreet: 'rua vanderlei dallacosta',
-      adressNumber: '0310',
-      adressCityId: '',
-      adressDistrict: 'centro',
-      adressCep: '',
-      responsibleName: 'Claudete',
-      responsibleSurname: 'Izabel',
-      responsibleCpf: '31547389249',
-      responsibleEmail: 'izabeldesouzaclaudete@gmail.com',
-    },
-  ];
+  model = UserModel;
   async save(user: User): Promise<void> {
-    this.usersDatabase.push({
+    this.model.create({
       _id: user._id,
       cpf: user.cpf,
       rg: user.rg,
@@ -51,32 +29,94 @@ export default class UserMemoryRepository implements UserRepositoryInterface {
       responsibleEmail: user.responsibleEmail,
     });
   }
-  async update(userEntity: User): Promise<void> {
-    const userIndex = this.usersDatabase.findIndex(
-      (databaseUser) => databaseUser._id === userEntity._id,
+  async update(UserEntity: User): Promise<void> {
+    const user = await this.model.findByIdAndUpdate(
+      UserEntity._id,
+      {
+        _id: UserEntity._id,
+        cpf: UserEntity.cpf,
+        rg: UserEntity.rg,
+        name: UserEntity.name,
+        surname: UserEntity.surname,
+        phone: UserEntity.phone,
+        email: UserEntity.email,
+        password: UserEntity.password,
+        birthDate: UserEntity.birthDate,
+        type: UserEntity.type,
+        idEnterprise: UserEntity.idEnterprise,
+        adressStreet: UserEntity.adressStreet,
+        adressNumber: UserEntity.adressNumber,
+        adressCityId: UserEntity.adressCityId,
+        adressDistrict: UserEntity.adressDistrict,
+        adressCep: UserEntity.adressCep,
+        responsibleName: UserEntity.responsibleName,
+        responsibleSurname: UserEntity.responsibleSurname,
+        responsibleCpf: UserEntity.responsibleCpf,
+        responsibleEmail: UserEntity.responsibleEmail,
+      },
+      { new: true },
     );
-    if (userIndex === -1) throw new Error('User not found');
-    this.usersDatabase[userIndex] = userEntity;
+    if (!user) throw new Error('User not found');
   }
-  async delete(userId: string): Promise<void> {
-    const userIndex = this.usersDatabase.findIndex(
-      (databaseUser) => databaseUser._id === userId,
-    );
-    if (userIndex === -1) throw new Error('User not found');
-    this.usersDatabase.splice(userIndex, 1);
+  async delete(UserId: string): Promise<void> {
+    const User = await this.model.findByIdAndDelete(UserId);
+    if (!User) throw new Error('User not found');
   }
-  async getOne(userId: string): Promise<User> {
-    const userDto = this.usersDatabase.find(
-      (databaseUser) => databaseUser._id === userId,
-    );
-    if (!userDto) throw new Error('User not found');
-    const user = new User(userDto);
-    return user;
+  async getOne(UserId: string): Promise<User> {
+    const UserDto = await this.model.findById(UserId);
+    if (!UserDto) throw new Error('User not found');
+    return new User({
+      _id: UserDto._id,
+      cpf: UserDto.cpf,
+      rg: UserDto.rg,
+      name: UserDto.name,
+      surname: UserDto.surname,
+      phone: UserDto.phone,
+      email: UserDto.email,
+      password: UserDto.password,
+      birthDate: UserDto.birthDate,
+      type: UserDto.type,
+      idEnterprise: UserDto.idEnterprise,
+      adressStreet: UserDto.adressStreet,
+      adressNumber: UserDto.adressNumber,
+      adressCityId: UserDto.adressCityId,
+      adressDistrict: UserDto.adressDistrict,
+      adressCep: UserDto.adressCep,
+      responsibleName: UserDto.responsibleName,
+      responsibleSurname: UserDto.responsibleSurname,
+      responsibleCpf: UserDto.responsibleCpf,
+      responsibleEmail: UserDto.responsibleEmail,
+    });
   }
   async getAll(): Promise<Array<User>> {
-    return this.usersDatabase.map((user) => new User(user));
+    const Users = await this.model.find();
+    return Users.map(
+      (UserDto) =>
+        new User({
+          _id: UserDto._id,
+          cpf: UserDto.cpf,
+          rg: UserDto.rg,
+          name: UserDto.name,
+          surname: UserDto.surname,
+          phone: UserDto.phone,
+          email: UserDto.email,
+          password: UserDto.password,
+          birthDate: UserDto.birthDate,
+          type: UserDto.type,
+          idEnterprise: UserDto.idEnterprise,
+          adressStreet: UserDto.adressStreet,
+          adressNumber: UserDto.adressNumber,
+          adressCityId: UserDto.adressCityId,
+          adressDistrict: UserDto.adressDistrict,
+          adressCep: UserDto.adressCep,
+          responsibleName: UserDto.responsibleName,
+          responsibleSurname: UserDto.responsibleSurname,
+          responsibleCpf: UserDto.responsibleCpf,
+          responsibleEmail: UserDto.responsibleEmail,
+        }),
+    );
   }
   async getLength(): Promise<number> {
-    return this.usersDatabase.length;
+    return (await this.model.find()).length;
   }
 }

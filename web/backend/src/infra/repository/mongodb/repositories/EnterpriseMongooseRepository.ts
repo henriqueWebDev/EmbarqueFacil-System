@@ -24,7 +24,18 @@ export default class EnterpriseMongooseRepository
   async update(enterpriseEntity: EnterpriseEntity): Promise<void> {
     const enterprise = await this.model.findByIdAndUpdate(
       enterpriseEntity._id,
-      enterpriseEntity,
+      {
+        _id: enterpriseEntity._id,
+        cnpj: enterpriseEntity.cnpj,
+        name: enterpriseEntity.name,
+        phone: enterpriseEntity.phone,
+        email: enterpriseEntity.email,
+        adressStreet: enterpriseEntity.adressStreet,
+        adressNumber: enterpriseEntity.adressNumber,
+        adressCityId: enterpriseEntity.adressCityId,
+        adressDistrict: enterpriseEntity.adressDistrict,
+        adressCep: enterpriseEntity.adressCep,
+      },
       { new: true },
     );
     if (!enterprise) throw new Error('Enterprise not found');

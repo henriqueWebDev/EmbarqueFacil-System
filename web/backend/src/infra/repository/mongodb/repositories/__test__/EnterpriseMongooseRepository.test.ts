@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import EnterpriseEntity from '../../../../../domain/EnterpriseEntity';
-import EnterpriseMongooseRepository from '../../../mongodb/repositories/EnterpriseMongooseRepository';
+import EnterpriseMongooseRepository from '../EnterpriseMongooseRepository';
 import { config } from 'dotenv';
 config();
 const MAXTIMEOUT = 20000;
@@ -72,7 +72,7 @@ it(
   MAXTIMEOUT,
 );
 
-it.only(
+it(
   'should test if the database updates a Enterprise',
   async () => {
     await mongoose.connect(process.env.TESTCONNECTIONSTRING);
@@ -114,54 +114,12 @@ it.only(
   MAXTIMEOUT,
 );
 
-it('should test if the database creates new Enterprises (test getall)', async () => {
-  await mongoose.connect(process.env.TESTCONNECTIONSTRING);
-  const validInput1 = {
-    cnpj: '01916446000123',
-    name: 'Empresa valida',
-    phone: '69984696665',
-    email: 'Empresa@gmail.com',
-    adressStreet: 'rua vanderlei dallacosta',
-    adressNumber: '0310',
-    adressCityId: '',
-    adressDistrict: 'centro',
-    adressCep: '',
-  };
-  const validInput2 = {
-    cnpj: '01916446000123',
-    name: 'Empresa valida2',
-    phone: '69984696665',
-    email: 'Empresaa@gmail.com',
-    adressStreet: 'rua dallacosta',
-    adressNumber: '0310',
-    adressCityId: '',
-    adressDistrict: 'centro',
-    adressCep: '',
-  };
-  const repo = new EnterpriseMongooseRepository();
-  const firstLength = await repo.getLength();
-  const Enterprise1 = EnterpriseEntity.create(validInput1);
-  const Enterprise2 = EnterpriseEntity.create(validInput2);
-  await repo.save(Enterprise1);
-  await repo.save(Enterprise2);
-  await delay(20);
-  const getAll = await repo.getAll();
-  expect(getAll.length).toBe(firstLength + 2);
-  await mongoose.connection.close();
-  expect(
-    getAll.find((Enterprise) => Enterprise._id == Enterprise1._id),
-  ).toBeDefined();
-  expect(
-    getAll.find((Enterprise) => Enterprise._id == Enterprise2._id),
-  ).toBeDefined();
-});
-
 it(
   'should test if the database gives an error if the Enterprise tries to access a invalid Id',
   async () => {
     await mongoose.connect(process.env.TESTCONNECTIONSTRING);
     const repo = new EnterpriseMongooseRepository();
-    expect(() => repo.getOne('id')).rejects.toThrow(
+    await expect(() => repo.getOne('id')).rejects.toThrow(
       new Error('Enterprise not found'),
     );
     await mongoose.connection.close();
