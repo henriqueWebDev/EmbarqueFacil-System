@@ -1,4 +1,4 @@
-import PaymentRepositoryInterface from '../../repository/PaymentRepositoryInterface';
+import PaymentRepositoryInterface from '../../repository/paymentRepositoryInterface';
 
 export default class UsecaseDeletePayment {
   constructor(readonly repo: PaymentRepositoryInterface) {}

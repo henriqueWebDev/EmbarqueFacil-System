@@ -1,4 +1,4 @@
-import RideRepositoryInterface from '../../repository/rideRepositoryInterface';
+import RideRepositoryInterface from '../../repository/RideRepositoryInterface';
 
 export default class UsecaseGetOneRide {
   constructor(readonly repo: RideRepositoryInterface) {}
