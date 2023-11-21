@@ -1,5 +1,5 @@
-import PaymentRepositoryInterface from '../../repository/PaymentRepositoryInterface';
-import PaymentEntity from '../../../domain/paymentEntity';
+import PaymentRepositoryInterface from '../../repository/paymentRepositoryInterface';
+import PaymentEntity from '../../../domain/PaymentEntity';
 
 export default class UsecaseCreatePayment {
   constructor(readonly repo: PaymentRepositoryInterface) {}

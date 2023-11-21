@@ -1,4 +1,4 @@
-import EnterpriseRepositoryInterface from '../../repository/EnterpriseRepositoryInterface';
+import EnterpriseRepositoryInterface from '../../repository/enterpriseRepositoryInterface';
 
 export default class UsecaseDeleteEnterprise {
   constructor(readonly repo: EnterpriseRepositoryInterface) {}
