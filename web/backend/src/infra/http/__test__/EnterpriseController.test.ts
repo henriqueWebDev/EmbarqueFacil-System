@@ -1,5 +1,5 @@
 import axios from 'axios';
-const baseurl = 'http://embarque-facil-system.vercel.app/enterprise';
+const baseurl = 'http://localhost:3000/enterprise';
 const MAXTIMEOUT = 15000;
 function CompareObjects(object1: any, object2: any) {
   expect(object1.cnpj).toBe(object2.cnpj);
@@ -11,6 +11,8 @@ function CompareObjects(object1: any, object2: any) {
   expect(object1.adressDistrict).toBe(object2.adressDistrict);
   expect(object1.adressCep).toBe(object2.adressCep);
 }
+
+const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
 it(
   'should post a new enterprise',
@@ -94,6 +96,7 @@ it(
     };
     const response = await axios.post(baseurl, validInput);
     const EnterpriseId = response.data.enterprise._id;
+    delay(3000);
     const enterprise = (await axios.get(baseurl + '/' + EnterpriseId)).data;
     expect(enterprise).toBeDefined();
     CompareObjects(enterprise, validInput.enterprise);
@@ -151,6 +154,7 @@ it(
       adressDistrict: 'centro',
       adressCep: '',
     };
+    await delay(6000);
     await axios.put(baseurl + '/' + EnterpriseId, enterpriseUpdate);
     const enterprise = (await axios.get(baseurl + '/' + EnterpriseId)).data;
     CompareObjects(enterprise, enterpriseUpdate);
