@@ -1,5 +1,5 @@
 import UserRepositoryInterface from 'src/application/repository/userRepositoryInterface';
-import * as JWT from "jsonwebtoken"
+import * as JWT from 'jsonwebtoken';
 import User from '../../../domain/User';
 import { config } from 'dotenv';
 config();
@@ -11,7 +11,7 @@ export default class UsecaseLoginUser {
     if (!user) throw new Error('Invalid credentials');
     const secretJWTKey = process.env.SecretJWTKey;
     const token = await JWT.sign(
-      { userId: user._id, permission: 'user' },
+      { userId: user._id, type: user.type },
       secretJWTKey,
       { expiresIn: 60 * 60 * 24 },
     );
