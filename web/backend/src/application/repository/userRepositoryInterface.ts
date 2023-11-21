@@ -5,6 +5,7 @@ export default interface UserRepositoryInterface {
   update(user: User): Promise<void>;
   delete(userId: string): Promise<void>;
   getOne(userId: string): Promise<User>;
+  login(loginData): Promise<object>;
   getAll(): Promise<Array<User>>;
   getLength(): Promise<number>;
 }
