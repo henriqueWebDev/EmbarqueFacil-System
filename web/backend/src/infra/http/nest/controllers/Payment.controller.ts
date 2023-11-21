@@ -9,13 +9,13 @@ import {
 } from '@nestjs/common';
 import PaymentMemoryRepository from '../../../repository/memory/PaymentMemoryRepository';
 import UsecaseGetAllPayment from '../../../../application/usecase/payment/getAllPayment.usecase';
-import UsecaseGetOnePayment from '../../../../application/usecase/Payment/getOnePayment.usecase';
-import UsecaseDeletePayment from '../../../../application/usecase/Payment/deletePayment.usecase';
-import UsecaseUpdatePayment from '../../../../application/usecase/Payment/updatePayment.usecase';
-import UsecaseCreatePayment from '../../../../application/usecase/Payment/createPayment.usecase';
+import UsecaseGetOnePayment from '../../../../application/usecase/payment/getOnePayment.usecase';
+import UsecaseDeletePayment from '../../../../application/usecase/payment/deletePayment.usecase';
+import UsecaseUpdatePayment from '../../../../application/usecase/payment/updatePayment.usecase';
+import UsecaseCreatePayment from '../../../../application/usecase/payment/createPayment.usecase';
 
-import { Input as CreateInput } from '../../../../application/usecase/Payment/createPayment.usecase';
-import { Input as UpdateInput } from '../../../../application/usecase/Payment/updatePayment.usecase';
+import { Input as CreateInput } from '../../../../application/usecase/payment/createPayment.usecase';
+import { Input as UpdateInput } from '../../../../application/usecase/payment/updatePayment.usecase';
 
 @Controller('payment')
 export default class PaymentController {
