@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import EnterpriseRepositoryInterface from '../../../application/repository/EnterpriseRepositoryInterface';
+import EnterpriseRepositoryInterface from '../../../application/repository/enterpriseRepositoryInterface';
 import EnterpriseEntity from '../../../domain/EnterpriseEntity';
 @Injectable()
 export default class EnterpriseMemoryRepository

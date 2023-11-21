@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import BusRepositoryInterface from '../../..//application/repository/busRepositoryInterface';
+import BusRepositoryInterface from '../../../application/repository/busRepositoryInterface';
 import Bus from '../../../domain/Bus';
 @Injectable()
 export default class BusMemoryRepository implements BusRepositoryInterface {

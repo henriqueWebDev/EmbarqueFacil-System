@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import RouteRepositoryInterface from '../../..//application/repository/RouteRepositoryInterface';
+import RouteRepositoryInterface from '../../../application/repository/routeRepositoryInterface';
 import RouteEntity from '../../../domain/RouteEntity';
 @Injectable()
 export default class RouteMemoryRepository implements RouteRepositoryInterface {

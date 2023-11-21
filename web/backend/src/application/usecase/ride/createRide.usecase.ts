@@ -1,4 +1,4 @@
-import RideRepositoryInterface from '../../repository/RideRepositoryInterface';
+import RideRepositoryInterface from '../../repository/rideRepositoryInterface';
 import RideEntity from '../../../domain/RideEntity';
 
 export default class UsecaseCreateRide {
