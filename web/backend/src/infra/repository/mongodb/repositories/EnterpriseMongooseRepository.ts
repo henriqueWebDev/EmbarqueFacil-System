@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import EnterpriseRepositoryInterface from 'src/application/repository/EnterpriseRepositoryInterface';
+import EnterpriseRepositoryInterface from '../../../../application/repository/enterpriseRepositoryInterface';
 import EnterpriseEntity from '../../../../domain/EnterpriseEntity';
 import EnterpriseModel from '../models/mongooseModelEnterprise';
 @Injectable()
