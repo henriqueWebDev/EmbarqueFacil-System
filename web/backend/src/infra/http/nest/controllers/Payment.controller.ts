@@ -8,7 +8,7 @@ import {
   Post,
 } from '@nestjs/common';
 import PaymentMemoryRepository from '../../../repository/memory/PaymentMemoryRepository';
-import UsecaseGetAllPayment from '/backend/src/application/usecase/Payment/getAllPayment.usecase';
+import UsecaseGetAllPayment from '../../../../application/usecase/Payment/getAllPayment.usecase.ts';
 import UsecaseGetOnePayment from '../../../../application/usecase/Payment/getOnePayment.usecase';
 import UsecaseDeletePayment from '../../../../application/usecase/Payment/deletePayment.usecase';
 import UsecaseUpdatePayment from '../../../../application/usecase/Payment/updatePayment.usecase';
