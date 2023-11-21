@@ -1,5 +1,5 @@
 import axios from 'axios';
-const baseurl = 'http://localhost:3000/enterprise';
+const baseurl = 'embarque-facil-system.vercel.app';
 
 function CompareObjects(object1: any, object2: any) {
   expect(object1.cnpj).toBe(object2.cnpj);
