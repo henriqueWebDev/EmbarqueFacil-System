@@ -7,7 +7,8 @@ import {
   Delete,
   Post,
 } from '@nestjs/common';
-import BusMemoryRepository from './../../../repository/memory/BusMemoryRepository';
+import BusMongooseRepository from '../../../repository/mongodb/repositories/BusMongooseRepository';
+
 import UsecaseGetAllBus from '../../../../application/usecase/bus/getAllBus.usecase';
 import UsecaseGetOneBus from '../../../../application/usecase/bus/getOneBus.usecase';
 import UsecaseDeleteBus from '../../../../application/usecase/bus/deleteBus.usecase';
@@ -19,7 +20,7 @@ import { Input as UpdateInput } from '../../../../application/usecase/bus/update
 
 @Controller('bus')
 export default class BusController {
-  constructor(readonly repo: BusMemoryRepository) {}
+  constructor(readonly repo: BusMongooseRepository) {}
 
   @Post()
   async create(@Body() createInput: CreateInput) {

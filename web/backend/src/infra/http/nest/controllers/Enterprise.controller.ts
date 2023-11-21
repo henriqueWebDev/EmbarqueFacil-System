@@ -7,8 +7,8 @@ import {
   Delete,
   Post,
 } from '@nestjs/common';
-import EnterpriseMemoryRepository from '../../../repository/memory/EnterpriseMemoryRepository';
-import UserMemoryRepository from '../../../repository/memory/UserMemoryRepository';
+import EnterpriseMongooseRepository from '../../../repository/mongodb/repositories/EnterpriseMongooseRepository';
+import UserMongooseRepository from '../../../repository/mongodb/repositories/UserMongooseRepository';
 
 import UsecaseGetAllEnterprise from '../../../../application/usecase/enterprise/getAllEnterprise.usecase';
 import UsecaseGetOneEnterprise from '../../../../application/usecase/enterprise/getOneEnterprise.usecase';
@@ -22,8 +22,8 @@ import { Input as UpdateInput } from '../../../../application/usecase/enterprise
 @Controller('enterprise')
 export default class EnterpriseController {
   constructor(
-    readonly EnterpriseRepo: EnterpriseMemoryRepository,
-    readonly UserRepo: UserMemoryRepository,
+    readonly EnterpriseRepo: EnterpriseMongooseRepository,
+    readonly UserRepo: UserMongooseRepository,
   ) {}
 
   @Post()

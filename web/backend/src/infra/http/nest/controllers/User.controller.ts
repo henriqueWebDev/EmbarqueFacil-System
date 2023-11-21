@@ -7,7 +7,8 @@ import {
   Delete,
   Post,
 } from '@nestjs/common';
-import UserMemoryRepository from './../../../repository/memory/UserMemoryRepository';
+import UserMongooseRepository from '../../../repository/mongodb/repositories/UserMongooseRepository';
+
 import UsecaseCreateUser from '../../../../application/usecase/user/createUser.usecase';
 import UsecaseGetAllUser from '../../../../application/usecase/user/getAllUser.usecase';
 import UsecaseGetOneUser from '../../../../application/usecase/user/getOneUser.usecase';
@@ -19,7 +20,7 @@ import { Input as UpdateInput } from '../../../../application/usecase/user/updat
 
 @Controller('user')
 export default class UserController {
-  constructor(readonly repo: UserMemoryRepository) {}
+  constructor(readonly repo: UserMongooseRepository) {}
 
   @Post()
   async create(@Body() createInput: CreateInput) {

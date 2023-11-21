@@ -3,7 +3,7 @@ import User from '../../../../domain/User';
 import { Injectable } from '@nestjs/common';
 import UserModel from '../models/mongooseModelUser';
 @Injectable()
-export default class UserMemoryRepository implements UserRepositoryInterface {
+export default class UserMongooseRepository implements UserRepositoryInterface {
   model = UserModel;
   async save(user: User): Promise<void> {
     this.model.create({
