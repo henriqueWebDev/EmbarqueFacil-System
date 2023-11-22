@@ -175,6 +175,7 @@ export default {
     logOutOfAccount() {
       localStorage.removeItem('user')
       localStorage.removeItem('token')
+      localStorage.removeItem('clientID')
       this.$router.push('/')
     }
   }

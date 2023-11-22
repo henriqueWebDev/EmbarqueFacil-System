@@ -1,53 +1,53 @@
 <template>
-  <q-page 
-    padding 
+  <q-page
+    padding
     class="row justify-center"
   >
-    <q-form 
-      @submit="onSubmit" 
+    <q-form
+      @submit="onSubmit"
       class="row col-11"
     >
       <div class="col-12 text-h6 flex justify-center items-center q-my-md">
       Empresa
       </div>
-      <q-input 
-        filled  
-        type="text" 
-        label="Nome da empresa" 
-        v-model="enterprise.enterpriseName" 
-        color="indigo-10" 
-        class="q-my-md col-12" 
+      <q-input
+        filled
+        type="text"
+        label="Nome da empresa"
+        v-model="enterprise.enterpriseName"
+        color="indigo-10"
+        class="q-my-md col-12"
         :rules="[isTheInputValueNull()]"
       >
         <template v-slot:prepend>
-          <q-icon 
-            class="text-black" 
-            name="factory" 
+          <q-icon
+            class="text-black"
+            name="factory"
           />
         </template>
       </q-input>
-      <q-input 
-        filled  
-        type="text" 
-        label="CNPJ" 
-        v-model="enterprise.cnpj" 
-        color="indigo-10" 
-        class="q-my-md col-12" 
+      <q-input
+        filled
+        type="text"
+        label="CNPJ"
+        v-model="enterprise.cnpj"
+        color="indigo-10"
+        class="q-my-md col-12"
         :rules="[isTheInputValueNull(), validateCnpj()]"
         mask="##.###.###/####-##"
       >
         <template v-slot:prepend>
-          <q-icon 
-            class="text-black" 
-            name="-" 
+          <q-icon
+            class="text-black"
+            name="-"
           />
         </template>
       </q-input>
-      <q-select 
-        standout="bg-indigo-10 text-white" 
-        v-model="enterprise.adressCityId" 
-        :options="city" 
-        label="Cidade" 
+      <q-select
+        standout="bg-indigo-10 text-white"
+        v-model="enterprise.adressCityId"
+        :options="city"
+        label="Cidade"
         class="q-my-md col-12"
       >
         <template v-slot:prepend>
@@ -58,97 +58,97 @@
       <div class="col-12 text-h6 flex justify-center items-center q-my-md q-mt-xl">
         Admin
       </div>
-      <q-input 
-        filled  
-        type="text" 
-        label="Nome do administrador" 
-        v-model="user.name" 
-        color="indigo-10" 
-        class="q-my-md col-12" 
+      <q-input
+        filled
+        type="text"
+        label="Nome do administrador"
+        v-model="user.name"
+        color="indigo-10"
+        class="q-my-md col-12"
         @keypress="formattedNameAndSurname(user.name)"
         :rules="[isTheInputValueNull(), inputValueContainOnlyLettersAndWhitespace()]"
       >
         <template v-slot:prepend>
-          <q-icon 
-            class="text-black" 
-            name="person" 
+          <q-icon
+            class="text-black"
+            name="person"
           />
         </template>
       </q-input>
-      <q-input 
-        filled 
-        type="text" 
+      <q-input
+        filled
+        type="text"
         label="Sobrenome do administrador"
-        v-model="user.surname" 
-        color="indigo-10" 
-        class="q-my-md col-12" 
+        v-model="user.surname"
+        color="indigo-10"
+        class="q-my-md col-12"
         @keypress="formattedNameAndSurname(user.surname)"
         :rules="[isTheInputValueNull(), inputValueContainOnlyLettersAndWhitespace()]"
       >
         <template v-slot:prepend>
-          <q-icon 
-            class="text-black" 
-            name="person" 
+          <q-icon
+            class="text-black"
+            name="person"
           />
         </template>
       </q-input>
-      <q-input 
-        filled 
-        type="text" 
+      <q-input
+        filled
+        type="text"
         label="Email"
-        v-model="user.email" 
-        color="indigo-10" 
-        class="q-my-md col-12" 
+        v-model="user.email"
+        color="indigo-10"
+        class="q-my-md col-12"
         :rules="[isTheInputValueNull(), validateEmailFormat()]"
       >
         <template v-slot:prepend>
-          <q-icon 
-            class="text-black" 
-            name="mail" 
+          <q-icon
+            class="text-black"
+            name="mail"
           />
         </template>
       </q-input>
-      <q-input 
-        filled 
+      <q-input
+        filled
         type="date"
-        v-model="user.birthDate" 
-        label="Data de nascimento" 
-        color="indigo-10" 
-        class="q-my-md col-12" 
+        v-model="user.birthDate"
+        label="Data de nascimento"
+        color="indigo-10"
+        class="q-my-md col-12"
         :rules="[isTheInputValueNull(), validateBirthDate()]"
       >
         <template v-slot:prepend>
-          <q-icon 
-            class="text-black" 
-            name="event" 
+          <q-icon
+            class="text-black"
+            name="event"
           />
         </template>
       </q-input>
-      <q-input 
-        filled 
+      <q-input
+        filled
         type="text"
-        v-model="user.cpf" 
-        label="CPF" 
-        color="indigo-10" 
-        mask="###.###.###-##" 
-        class="q-my-md col-12" 
-        inputmode="numeric" 
+        v-model="user.cpf"
+        label="CPF"
+        color="indigo-10"
+        mask="###.###.###-##"
+        class="q-my-md col-12"
+        inputmode="numeric"
         :rules="[isTheInputValueNull(), validateCpf()]"
       >
         <template v-slot:prepend>
-          <q-icon 
-            class="text-black" 
-            name="-" 
+          <q-icon
+            class="text-black"
+            name="-"
           />
         </template>
       </q-input>
-      <q-input 
-        filled 
-        type="tel" 
-        v-model="user.phone" 
-        label="Telefone" 
-        mask="+55 ## #####-####"  
-        color="indigo-10" 
+      <q-input
+        filled
+        type="tel"
+        v-model="user.phone"
+        label="Telefone"
+        mask="+55 ## #####-####"
+        color="indigo-10"
         class="q-my-md col-12"
         :rules="[isTheInputValueNull()]"
       >
@@ -156,49 +156,49 @@
           <q-icon class="text-black" name="phone" />
         </template>
       </q-input>
-      <q-input 
-        filled 
-        :type="visiblePassword ? 'password' : 'text'" 
-        label="Senha" 
-        v-model="user.password" 
-        color="indigo-10" 
+      <q-input
+        filled
+        :type="visiblePassword ? 'password' : 'text'"
+        label="Senha"
+        v-model="user.password"
+        color="indigo-10"
         class="q-my-md col-12"
         :rules="[isTheInputValueNull(), minLengthPassowrd(), passwordsAreTheSame()]"
       >
         <template v-slot:prepend>
-          <q-icon 
-            class="text-black" 
-            name="key" 
+          <q-icon
+            class="text-black"
+            name="key"
           />
         </template>
         <template v-slot:append>
-          <q-icon 
+          <q-icon
             class="text-black cursor-pointer"
             :name="visiblePassword ? 'visibility_off':'visibility'"
             @click="visiblePassword = !visiblePassword"
           />
         </template>
       </q-input>
-      <q-input 
-        filled 
-        :type="visiblePassword ? 'password' :'text'" label="Confirmar senha" 
-        v-model="confirmPassword" 
+      <q-input
+        filled
+        :type="visiblePassword ? 'password' :'text'" label="Confirmar senha"
+        v-model="confirmPassword"
         color="indigo-10"
         class="q-my-md col-12"
         :rules="[isTheInputValueNull(), minLengthPassowrd(), passwordsAreTheSame()]"
       >
         <template v-slot:prepend>
-          <q-icon 
+          <q-icon
             class="text-black"
-            name="key" 
+            name="key"
           />
         </template>
       </q-input>
       <div class="text-right q-my-sm col-12">
-        <q-btn 
-          label="Cadastrar Empresa" 
-          type="submit" 
-          color="indigo-10" 
+        <q-btn
+          label="Cadastrar Empresa"
+          type="submit"
+          color="indigo-10"
           class="text-white"
         />
       </div>
@@ -228,7 +228,7 @@ export default {
         name: '',
         surname: '',
         phone: '',
-        email: '',  
+        email: '',
         password: '',
         birthDate: '',
         type: 'admin',

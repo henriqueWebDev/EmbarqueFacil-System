@@ -40,10 +40,10 @@ async function registerEnterprise() {
     enterpriseUrl,
     validInputEnterprise,
   );
-  return responseEnterprise.data.enterprise_id;
+  return responseEnterprise.data.enterprise._id;
 }
 
-async function registerUser() {
+async function registerUser(enterpriseId: string) {
   const UserUrl = 'http://localhost:3000/user';
   const validInputUser = {
     cpf: '31547389249',
@@ -55,7 +55,7 @@ async function registerUser() {
     password: 'sim',
     birthDate: '08-23-2005',
     type: 'admin',
-    idEnterprise: '',
+    idEnterprise: enterpriseId,
     adressStreet: 'rua vanderlei dallacosta',
     adressNumber: '0310',
     adressCityId: '',
@@ -82,7 +82,7 @@ function compareObject(Payment: any, object: any) {
 
 it('should post a new user', async () => {
   const enterpriseId = await registerEnterprise();
-  const userId = await registerUser();
+  const userId = await registerUser(enterpriseId);
   const validInputPayment = {
     enterpriseId: enterpriseId,
     clientId: userId,
@@ -96,7 +96,7 @@ it('should post a new user', async () => {
 
 it('should post and request new user', async () => {
   const enterpriseId = await registerEnterprise();
-  const userId = await registerUser();
+  const userId = await registerUser(enterpriseId);
   const validInputPayment = {
     enterpriseId: enterpriseId,
     clientId: userId,
@@ -111,7 +111,7 @@ it('should post and request new user', async () => {
 
 it('should post the validInput and update the database with the newValidInput', async () => {
   const enterpriseId = await registerEnterprise();
-  const userId = await registerUser();
+  const userId = await registerUser(enterpriseId);
   const validInputPayment = {
     enterpriseId: enterpriseId,
     clientId: userId,

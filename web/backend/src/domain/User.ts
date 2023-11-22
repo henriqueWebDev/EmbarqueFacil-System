@@ -1,9 +1,7 @@
 import isEmail from 'validator/lib/isEmail';
-import { AES } from 'crypto-ts';
-import * as dotenv from 'dotenv';
+import { config } from 'dotenv';
 import { randomUUID } from 'crypto';
-
-dotenv.config();
+config();
 export default class User {
   constructor(private props: UserDto) {
     if (!isEmail(props.email)) throw new Error('Invalid email');
@@ -15,9 +13,7 @@ export default class User {
       ...props,
     });
   }
-  static encrypt(password: string) {
-    return String(AES.encrypt(password, process.env.HashKey));
-  }
+
   get _id() {
     return this.props._id;
   }

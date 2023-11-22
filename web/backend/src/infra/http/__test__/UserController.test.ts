@@ -1,4 +1,7 @@
 import axios from 'axios';
+const baseurl = 'http://localhost:3000/user';
+const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+
 function compareObject(user: any, object: any) {
   expect(user.cpf).toBe(object.cpf);
   expect(user.rg).toBe(object.rg);
@@ -6,7 +9,6 @@ function compareObject(user: any, object: any) {
   expect(user.surname).toBe(object.surname);
   expect(user.phone).toBe(object.phone);
   expect(user.email).toBe(object.email);
-  expect(user.password).toBe(object.password);
   expect(user.birthDate).toBe(object.birthDate);
   expect(user.type).toBe(object.type);
   expect(user.idEnterprise).toBe(object.idEnterprise);
@@ -22,7 +24,6 @@ function compareObject(user: any, object: any) {
   expect(user.responsibleCpf).toBe(object.responsibleCpf);
   expect(user.responsibleEmail).toBe(object.responsibleEmail);
 }
-const baseurl = 'http://localhost:3000/user';
 
 const validInput = {
   cpf: '70116562277',
@@ -34,7 +35,7 @@ const validInput = {
   password: 'sim',
   birthDate: '08-23-2005',
   type: 'client',
-  idEnterprise: '',
+  idEnterprise: 'aleatoryyValue',
   adressStreet: 'rua vanderlei dallacosta',
   adressNumber: '0310',
   adressCityId: '',
@@ -55,7 +56,7 @@ const validInput2 = {
   password: 'sim',
   birthDate: '08-23-2005',
   type: 'admin',
-  idEnterprise: '',
+  idEnterprise: 'aleatoryyValue',
   adressStreet: 'rua vanderlei dallacosta',
   adressNumber: '0310',
   adressCityId: '',
@@ -75,6 +76,7 @@ it('should post a new user', async () => {
 
 it('should post and request new user', async () => {
   const userId = (await axios.post(baseurl, validInput)).data._id;
+  await delay(3000);
   const user = (await axios.get(baseurl + '/' + userId)).data;
   expect(user).toBeDefined();
 });
@@ -82,6 +84,7 @@ it('should post and request new user', async () => {
 it('should post the validInput and update the database with the newValidInput', async () => {
   const userId = (await axios.post(baseurl, validInput)).data._id;
   const newValidInput = { ...validInput2, _id: userId };
+  await delay(3000);
   await axios.put(baseurl + '/' + userId, newValidInput);
   const user = (await axios.get(baseurl + '/' + userId)).data;
   compareObject(user, newValidInput);
