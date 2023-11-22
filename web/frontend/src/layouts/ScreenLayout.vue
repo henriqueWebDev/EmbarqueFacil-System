@@ -158,7 +158,11 @@ export default {
   created() {
     const user = JSON.parse(localStorage.getItem('user'))
     if (!user) {
-      Notify.create({message: 'Para acessar esta página, é necessário fazer login em sua conta.'})
+      Notify.create({
+        message: 'Para acessar esta página, é necessário fazer login em sua conta.',
+        position: 'top',
+        color: 'red-10'
+      })
       this.$router.push('/')
     } else { 
       this.userType = user.type

@@ -193,6 +193,7 @@
             :options="city" 
             label="Cidade" 
             class="q-my-md col-12 col-sm-4"
+            :rules="[isTheInputValueNull()]"
           >
             <template v-slot:prepend>
               <q-icon 
@@ -344,7 +345,10 @@
 import { ref } from 'vue'
 import validateCpfScript from '../script/validateCpfScript';
 import ViaCep from 'src/entities/ViaCEP';
+import RegisterClient from 'src/entities/RegisterClient'
+import { Notify } from 'quasar';
 
+const registerClient = new RegisterClient()
 const viaCep = new ViaCep()
 
 export default {
@@ -357,32 +361,48 @@ export default {
       needResponsible: ref(false),
       visiblePassword: ref(true),
       user: {
-        cpf: ref(null),
-        name: ref(null),
-        surname: ref(null),
-        phone: ref(null),
-        email: ref(null),
-        password: ref(null),
-        birthDate: new Date(),
+        cpf: '',
+        name: '',
+        surname: '',
+        phone: '',
+        email: '',
+        password: '',
+        birthDate: '',
         type: 'client',
-        idEnterprise: ref(null),
+        idEnterprise: '',
 
-        adressStreet: ref(null),
-        adressNumber: ref(null),
-        adressCityId: ref(null),
-        adressDistrict: ref(null),
-        adressCep: ref(null),
+        adressStreet: '',
+        adressNumber: '',
+        adressCityId: '',
+        adressDistrict: '',
+        adressCep: '',
 
-        responsibleName: ref(null),
-        responsibleSurname: ref(null),
-        responsibleCpf: ref(null),
-        responsibleEmail: ref(null)
+        responsibleName: '',
+        responsibleSurname: '',
+        responsibleCpf: '',
+        responsibleEmail: ''
       }
     }
   },
   methods: {
-    onSubmit() {
-      console.log(this.user)
+    async onSubmit() {
+      const response = await registerClient.register(this.enterprise, this.user)
+      if (response == 'successfully registered') {
+        Notify.create({
+          message: 'Conta da empresa criada com sucesso !',
+          position: 'top',
+          color: 'green-8'
+        })
+        this.$router.push('/')
+      } 
+      if (!(response == 'successfully registered')) {
+        Notify.create({
+          message: 'Não foi possivel criar a conta !',
+          position: 'top',
+          color: 'red-10'
+        })
+        this.$router.push('/')
+      }
     },
     validateCep() {
       return val => {

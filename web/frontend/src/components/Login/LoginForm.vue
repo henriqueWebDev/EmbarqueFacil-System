@@ -26,7 +26,8 @@
           filled
           :type="visiblePassword ? 'password' : 'text'"
           v-model="loginData.password"
-          color="light-blue-10" label="Senha"
+          color="indigo-10" 
+          label="Senha"
           class="col-10 col-sm-6 q-mx-sm q-mt-sm"
           :rules="[isTheInputValueNull()]"
         >
@@ -95,7 +96,11 @@ export default {
     async onSubmit() {
       let loginStatus = await Login(this.loginData)
       if (loginStatus == 'Bad Request') {
-        Notify.create({message: 'A senha ou o email inseridos estão incorretos.'})
+        Notify.create({
+          message: 'A senha ou o email inseridos estão incorretos.',
+          position: 'top',
+          color: 'red-10'
+        })
       } else {
         if (loginStatus == 'admin') {
           this.$router.push('/screen/admin')
@@ -109,10 +114,18 @@ export default {
       const token = localStorage.getItem('token')
       if (user && token) {
         if (user.type == 'admin') {
-          Notify.create({message: 'O autologin foi realizado com sucesso. Bem-vindo de volta!'})
+          Notify.create({
+            message: 'O autologin foi realizado com sucesso. Bem-vindo de volta!',
+            position: 'top',
+            color: 'green-8'
+          })
           this.$router.push('screen/admin')
         } else if (user.type == 'client') {
-          Notify.create({message: 'O autologin foi realizado com sucesso. Bem-vindo de volta!'})
+          Notify.create({
+            message: 'O autologin foi realizado com sucesso. Bem-vindo de volta!',
+            position: 'top',
+            color: 'green-10'
+          })
           this.$router.push('screen/client')
         }
       }

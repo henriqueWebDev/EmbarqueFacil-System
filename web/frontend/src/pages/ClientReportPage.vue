@@ -56,7 +56,7 @@ export default {
   methods: {
     async getClients() {
       this.clients = await clients.getAllClients()
-      //console.log(this.clients)
+      console.log(this.clients)
     },
     filterClients() {
       let listClients = []

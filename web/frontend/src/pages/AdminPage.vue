@@ -21,7 +21,11 @@ export default {
   methods: {
     accessPermission() {
       if (user.type != 'admin') {
-        Notify.create({message: 'Desculpe, você não tem permissão para acessar esta página.'})
+        Notify.create({
+          message: 'Desculpe, você não tem permissão para acessar esta página.',
+          position: 'top',
+          color: 'red-10'
+        })
         this.$router.push('/')
       }
     }

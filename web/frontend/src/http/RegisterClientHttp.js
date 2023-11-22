@@ -1,12 +1,12 @@
 import axios from "axios";
 import backendDefaultRoute from "src/entities/BackendDefaultRoute";
 
-export default class RegisterEnterpriseHttp {
+export default class RegisterClientHttp {
    constructor () {}
 
    async post(data) {
       try {
-         const response = await axios.post(backendDefaultRoute + 'enterprise', data, {
+         const response = await axios.post(backendDefaultRoute + 'user', data, {
             headers: {
                'Content-Type': 'application/json',
             }

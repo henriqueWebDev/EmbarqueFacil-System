@@ -211,7 +211,7 @@ import { ref } from 'vue'
 import validateCpfScript from '../script/validateCpfScript'
 import validateCnpjScript from '../script/validateCnpjScript'
 import RegisterEnterprise from 'src/entities/RegisterEnterprise'
-import axios from 'axios'
+import { Notify } from 'quasar'
 
 const registerEnterprise = new RegisterEnterprise()
 
@@ -230,7 +230,7 @@ export default {
         phone: '',
         email: '',  
         password: '',
-        birthDate: new Date(),
+        birthDate: '',
         type: 'admin',
         adressStreet: '',
         adressNumber: '',
@@ -257,19 +257,29 @@ export default {
   },
   methods: {
     async onSubmit() {
-      const response = ''
-      try {
-        response = await axios.get('http://embarque-facil-system.vercel.app/' + 'enterprise')
-      } catch (error) {
-        console.log(error)
+      const response = await registerEnterprise.register(this.enterprise, this.user)
+      if (response == 'successfully registered') {
+        Notify.create({
+          message: 'Conta da empresa criada com sucesso !',
+          position: 'top',
+          color: 'green-8'
+        })
+        this.$router.push('/')
+      } 
+      if (!(response == 'successfully registered')) {
+        Notify.create({
+          message: 'Não foi possivel criar a conta !',
+          position: 'top',
+          color: 'red-10'
+        })
+        this.$router.push('/')
       }
-      console.log(response)
     },
     isTheInputValueNull() {
       return val => val && val.length !== 0 || 'Este campo não pode estar nulo.';
     },
     validateCnpj() {
-     return val   => (val.length == 18) && validateCnpjScript(val) || 'O CNPJ deve conter exatamente 18 dígitos.'
+      return val   => (val.length == 18) && validateCnpjScript(val) || 'O CNPJ deve conter exatamente 18 dígitos.'
     },
     formattedNameAndSurname(inputSelected) {
       if (inputSelected !== null && inputSelected !== undefined) {

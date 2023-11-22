@@ -8,10 +8,9 @@ export default class RegisterEnterpriseGateway {
       let data = {dataEnterprise, dataAdmin}
       try {
          const response = await registerEnterpriseHttp.post(data)
-         console.log('response: ', response)
-         //if (response) {
-         //   return 'successfully registered'
-         //}
+         if (response) {
+            return 'successfully registered'
+         }
       } catch (error) {
          return error.message;
       }

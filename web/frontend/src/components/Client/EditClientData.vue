@@ -116,14 +116,26 @@ export default {
         const alterStatus = await client.alterData(this.client, localStorage.getItem('token'))
         if (alterStatus == 'Success In Changing') {
           this.$router.push('/screen/client')
-          Notify.create({message: 'A alteração foi realizada com sucesso.'})
+          Notify.create({
+            message: 'A alteração foi realizada com sucesso.',
+            position: 'top',
+            color: 'green-8'
+          })
         }
         if (alterStatus == 'Error When Changing') {
           this.$router.push('/screen/client')
-          Notify.create({message: 'Desculpe, ocorreu um erro durante a alteração. Por favor, tente novamente mais tarde.'})
+          Notify.create({
+            message: 'Desculpe, ocorreu um erro durante a alteração. Por favor, tente novamente mais tarde.',
+            position: 'top',
+            color: 'red-10'
+          })
         }
       } else {
-        Notify.create({message: "Para continuar, certifique-se de que todos os campos estejam devidamente validados."})
+        Notify.create({
+          message: "Para continuar, certifique-se de que todos os campos estejam devidamente validados.",
+          position: 'top',
+          color: 'red-10'
+        })
       }
     },
     getUser() {
