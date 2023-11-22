@@ -2,13 +2,19 @@ import UserRepositoryInterface from 'src/application/repository/userRepositoryIn
 import User from '../../../../domain/User';
 import { Injectable } from '@nestjs/common';
 import UserModel from '../models/mongooseModelUser';
+import * as bcrypt from 'bcrypt';
+
 @Injectable()
 export default class UserMongooseRepository implements UserRepositoryInterface {
+  saltRounds = 5;
   async login(loginData: any): Promise<User> {
     const userDto = await this.model.findOne({ email: loginData.email });
     if (!userDto) throw new Error('User not found');
-    if (userDto.password != User.encrypt(loginData.password))
-      throw new Error('Invalid Credentials');
+    const PasswordIsValid = await bcrypt.compare(
+      loginData.password,
+      userDto.password,
+    );
+    if (!PasswordIsValid) throw new Error('Invalid Credentials');
     return new User({
       _id: userDto._id,
       cpf: userDto.cpf,
@@ -34,6 +40,8 @@ export default class UserMongooseRepository implements UserRepositoryInterface {
   }
   model = UserModel;
   async save(user: User): Promise<void> {
+    const hash = await bcrypt.hash(user.password, this.saltRounds);
+
     this.model.create({
       _id: user._id,
       cpf: user.cpf,
@@ -42,7 +50,7 @@ export default class UserMongooseRepository implements UserRepositoryInterface {
       surname: user.surname,
       phone: user.phone,
       email: user.email,
-      password: user.password,
+      password: String(hash),
       birthDate: user.birthDate,
       type: user.type,
       idEnterprise: user.idEnterprise,
@@ -58,6 +66,8 @@ export default class UserMongooseRepository implements UserRepositoryInterface {
     });
   }
   async update(UserEntity: User): Promise<void> {
+    const hash = await bcrypt.hash(UserEntity.password, this.saltRounds);
+
     const user = await this.model.findByIdAndUpdate(
       UserEntity._id,
       {
@@ -68,7 +78,7 @@ export default class UserMongooseRepository implements UserRepositoryInterface {
         surname: UserEntity.surname,
         phone: UserEntity.phone,
         email: UserEntity.email,
-        password: UserEntity.password,
+        password: hash,
         birthDate: UserEntity.birthDate,
         type: UserEntity.type,
         idEnterprise: UserEntity.idEnterprise,

@@ -9,7 +9,6 @@ function compareObject(user: any, object: any) {
   expect(user.surname).toBe(object.surname);
   expect(user.phone).toBe(object.phone);
   expect(user.email).toBe(object.email);
-  expect(user.password).toBe(object.password);
   expect(user.birthDate).toBe(object.birthDate);
   expect(user.type).toBe(object.type);
   expect(user.idEnterprise).toBe(object.idEnterprise);

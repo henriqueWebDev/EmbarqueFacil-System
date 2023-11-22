@@ -1,5 +1,4 @@
 import isEmail from 'validator/lib/isEmail';
-import { AES } from 'crypto-ts';
 import { config } from 'dotenv';
 import { randomUUID } from 'crypto';
 config();
@@ -14,9 +13,7 @@ export default class User {
       ...props,
     });
   }
-  static encrypt(password: string) {
-    return String(AES.encrypt(password, process.env.HashKey));
-  }
+
   get _id() {
     return this.props._id;
   }
@@ -55,7 +52,7 @@ export default class User {
     return this.props.password;
   }
   set password(password: string) {
-    this.props.password = User.encrypt(password);
+    this.props.password = password;
   }
   get birthDate() {
     return this.props.birthDate;

@@ -28,14 +28,14 @@ const validInput = {
   responsibleEmail: 'izabeldesouzaclaudete@gmail.com',
 };
 
-function compareObject(user: User, object: any) {
+async function compareObject(user: User, object: any) {
   expect(user.cpf).toBe(object.cpf);
   expect(user.rg).toBe(object.rg);
   expect(user.name).toBe(object.name);
   expect(user.surname).toBe(object.surname);
   expect(user.phone).toBe(object.phone);
   expect(user.email).toBe(object.email);
-  expect(user.password).toBe(object.password);
+  expect(user.password).not.toBe(object.password);
   expect(user.birthDate).toBe(object.birthDate);
   expect(user.type).toBe(object.type);
   expect(user.idEnterprise).toBe(object.idEnterprise);
@@ -105,6 +105,54 @@ it(
     await delay(20);
     const getuser = await repo.getOne(userCreate._id);
     compareObject(getuser, UpdateInput);
+    await mongoose.connection.close();
+  },
+  MAXTIMEOUT,
+);
+
+it(
+  'should test if the database gives an error if the user tries to access a invalid Id',
+  async () => {
+    await mongoose.connect(process.env.TESTCONNECTIONSTRING);
+    const repo = new UserMongooseRepository();
+    await expect(() => repo.getOne('id')).rejects.toThrow(
+      new Error('User not found'),
+    );
+    await mongoose.connection.close();
+  },
+  MAXTIMEOUT,
+);
+it(
+  'should test if the database finds a new user by login',
+  async () => {
+    await mongoose.connect(process.env.TESTCONNECTIONSTRING);
+    const repo = new UserMongooseRepository();
+    const user = User.create(validInput);
+    await repo.save(user);
+
+    await delay(20);
+
+    const loginUser = await repo.login({
+      email: validInput.email,
+      password: validInput.password,
+    });
+    compareObject(loginUser, validInput);
+    await mongoose.connection.close();
+  },
+  MAXTIMEOUT,
+);
+
+it(
+  'should test if the database gives an error if the password is wrong',
+  async () => {
+    await mongoose.connect(process.env.TESTCONNECTIONSTRING);
+    const repo = new UserMongooseRepository();
+    const user = User.create(validInput);
+    await repo.save(user);
+    await delay(20);
+    await expect(() =>
+      repo.login({ email: validInput.email, password: 'anything' }),
+    ).rejects.toThrow(new Error('Invalid Credentials'));
     await mongoose.connection.close();
   },
   MAXTIMEOUT,
